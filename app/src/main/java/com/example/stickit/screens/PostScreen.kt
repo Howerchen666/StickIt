@@ -1,5 +1,6 @@
 package com.example.stickit.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.eventFlow
 
 @Composable
 fun PostScreen(
@@ -26,6 +29,23 @@ fun PostScreen(
     onNavigateToProfile: () -> Unit,
     onNavigateToSearch: () -> Unit
 ) {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val lifecycleState = lifecycle.currentStateFlow.collectAsState()
+
+    LaunchedEffect(lifecycle) {
+        lifecycle.eventFlow.collect { event ->
+            Log.d("LifecycleLogger", "PostScreen lifecycle event: $event → targetState: ${event.targetState}")
+        }
+    }
+
+    // Optional: log when HomeScreen enters and leaves composition
+    DisposableEffect(Unit) {
+        Log.d("LifecycleLogger", "PostScreen entered composition")
+
+        onDispose {
+            Log.d("LifecycleLogger", "PostScreen left composition - On_Destroy")
+        }
+    }
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var maxPeople by remember { mutableStateOf("") }

@@ -1,5 +1,6 @@
 package com.example.stickit.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,14 +21,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.eventFlow
 
 @Composable
 fun HomeScreen(
     onNavigateToEventDetail: () -> Unit,
     onNavigateToPost: () -> Unit,
-    onNavigateToProfile: () -> Unit,
+    onNavigateToProfile: () -> Unit
+
+    ,
     onNavigateToSearch: () -> Unit
 ) {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val lifecycleState = lifecycle.currentStateFlow.collectAsState()
+
+    LaunchedEffect(lifecycle) {
+        lifecycle.eventFlow.collect { event ->
+            Log.d("LifecycleLogger", "HomeScreen lifecycle event: $event → targetState: ${event.targetState}")
+        }
+    }
+
+    DisposableEffect(Unit) {
+        Log.d("LifecycleLogger", "HomeScreen entered composition")
+
+        onDispose {
+            Log.d("LifecycleLogger", "HomeScreen left composition - On_Destroy")
+        }
+    }
     var selectedCategory by remember { mutableStateOf("Sports") }
     val categories = listOf("Sports", "Arts", "Party")
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "713816122273",
+    "project_id": "stick-it-2ab7e",
+    "storage_bucket": "stick-it-2ab7e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713816122273:android:38e5e4570f3107d229a1e0",
+        "android_client_info": {
+          "package_name": "com.example.stickit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYU6ZZRJ70sNcnxA6CBzXVH0UNzH_tEEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
