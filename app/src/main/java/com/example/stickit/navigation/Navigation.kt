@@ -1,10 +1,12 @@
 package com.example.stickit.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stickit.screens.*
+import viewmodel.AuthViewModel
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
@@ -18,13 +20,14 @@ sealed class Screen(val route: String) {
 @Composable
 fun NavigationGraph() {
     val navController = rememberNavController()
-
+    val viewModel: AuthViewModel = viewModel()
     NavHost(
         navController = navController,
         startDestination = Screen.Login.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
+                viewModel = viewModel,
                 onNavigateToHome = {
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
